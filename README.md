@@ -6,6 +6,8 @@
 
 > Simple, fast and lightweight slider, touch friendly
 
+Forked from: https://github.com/stbaer/rangeslider-js
+
 [Docs and Examples](http://stbaer.github.io/rangeslider-js/)
 
 - v1 was based on [rangeslider.js](https://github.com/andreruffert/rangeslider.js), main differences:
