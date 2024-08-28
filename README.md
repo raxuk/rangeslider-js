@@ -12,7 +12,6 @@
     - no jQuery
     - raf to throttle window resize, transform to set the handle position
     - fewer and only basic styles
-    - no vertical mode
 
 ## Install
 
@@ -24,6 +23,11 @@
 <input id="slider1" type="range">
 
 <input id="slider2" type="range" min="0" max="5" value="1" step="1">
+```
+
+Vertical mode:
+```html
+<input id="slider1" type="range" class="vertical">
 ```
 
 ```js

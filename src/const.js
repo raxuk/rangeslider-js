@@ -10,5 +10,6 @@ export default {
   START_EVENTS: ['mousedown', 'touchstart', 'pointerdown'],
   MOVE_EVENTS: ['mousemove', 'touchmove', 'pointermove'],
   END_EVENTS: ['mouseup', 'touchend', 'pointerup'],
-  PLUGIN_NAME: 'rangeslider-js'
+  PLUGIN_NAME: 'rangeslider-js',
+  VERTICAL_MODE: 'vertical'
 }

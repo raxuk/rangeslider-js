@@ -1,3 +1,7 @@
+.rangeslider.vertical {
+    transform: rotate(90deg);
+}
+
 .rangeslider {
     position: relative;
     display: block;

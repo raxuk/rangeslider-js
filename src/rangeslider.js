@@ -35,6 +35,7 @@ class RangeSlider {
    * @property {number} [options.max]
    * @property {number} [options.value]
    * @property {number} [options.step]
+   * @property {number} [options.vertical]
    * @property {function} [options.onInit] - init callback
    * @property {function} [options.onSlideStart] - slide start callback
    * @property {function} [options.onSlide] - slide callback
@@ -50,6 +51,8 @@ class RangeSlider {
     this.isInteracting = false
     this.needTriggerEvents = false
     this.constructor.count = this.constructor.count || 0
+
+    this.vertical = el.classList.contains(CONST.VERTICAL_MODE)
 
     this.identifier = `js-${CONST.PLUGIN_NAME}-${this.constructor.count++}`
 
@@ -147,7 +150,7 @@ class RangeSlider {
     this.handleWidth = utils.getDimension(this.handle, 'offsetWidth')
     this.rangeWidth = utils.getDimension(this.range, 'offsetWidth')
     this.maxHandleX = this.rangeWidth - this.handleWidth
-    this.grabX = this.handleWidth / 2
+    this.grab = this.handleWidth / 2
     this.position = this._getPositionFromValue(this.value)
 
     this.range.classList[this.element.disabled ? 'add' : 'remove'](CONST.DISABLED_CLASS)
@@ -186,14 +189,14 @@ class RangeSlider {
       return
     }
 
-    const posX = evPos(e, this.range).x
-    const rangeX = this.range.getBoundingClientRect().left
-    const handleX = this.handle.getBoundingClientRect().left - rangeX
+    const pos = this.vertical ? evPos(e, this.range).y : evPos(e, this.range).x
+    const range = this.range.getBoundingClientRect().left
+    const handle = this.handle.getBoundingClientRect().left - range
 
-    this._setPosition(posX - this.grabX)
+    this._setPosition(pos - this.grab)
 
-    if (posX >= handleX && posX < handleX + this.handleWidth) {
-      this.grabX = posX - handleX
+    if (pos >= handle && pos < handle + this.handleWidth) {
+      this.grab = pos - handle
     }
     this._updatePercentFromValue()
   }
@@ -205,8 +208,8 @@ class RangeSlider {
   _handleMove (e) {
     this.isInteracting = true
     e.preventDefault()
-    const posX = evPos(e, this.range).x
-    this._setPosition(posX - this.grabX)
+    const pos = this.vertical ? evPos(e, this.range).y : evPos(e, this.range).x
+    this._setPosition(pos - this.grab)
   }
 
   /**
@@ -236,7 +239,7 @@ class RangeSlider {
     const x = this._getPositionFromValue(value)
 
     // Update ui
-    this.fill.style.width = (x + this.grabX) + 'px'
+    this.fill.style.width = (x + this.grab) + 'px'
     this.handle.style.webkitTransform = this.handle.style.transform = `translate(${x}px, -50%)`
     this._setValue(value)
 
