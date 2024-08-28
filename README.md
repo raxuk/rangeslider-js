@@ -51,6 +51,7 @@ rangesliderJs.create(document.querySelectorAll('input[type="range"]'))
     max: 100,
     value: 50,
     step: 1,
+    vertical: true,
     // callbacks
     onInit: (value, percent, position) => {},
     onSlideStart: (value, percent, position) => {},

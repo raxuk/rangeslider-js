@@ -52,7 +52,11 @@ class RangeSlider {
     this.needTriggerEvents = false
     this.constructor.count = this.constructor.count || 0
 
-    this.vertical = el.classList.contains(CONST.VERTICAL_MODE)
+    this.vertical = options.vertical || el.classList.contains(CONST.VERTICAL_MODE)
+
+    if (this.vertical && !el.classList.contains(CONST.VERTICAL_MODE)) {
+      el.classList.add(CONST.VERTICAL_MODE)
+    }
 
     this.identifier = `js-${CONST.PLUGIN_NAME}-${this.constructor.count++}`
 
