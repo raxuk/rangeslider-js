@@ -54,10 +54,6 @@ class RangeSlider {
 
     this.vertical = options.vertical || el.classList.contains(CONST.VERTICAL_MODE)
 
-    if (this.vertical && !el.classList.contains(CONST.VERTICAL_MODE)) {
-      el.classList.add(CONST.VERTICAL_MODE)
-    }
-
     this.identifier = `js-${CONST.PLUGIN_NAME}-${this.constructor.count++}`
 
     this.min = utils.getFirstNumberLike(options.min, parseFloat(el.getAttribute('min')), CONST.MIN_DEFAULT)
@@ -71,6 +67,10 @@ class RangeSlider {
 
     this.range = createChild(CONST.RANGE_CLASS)
     this.range.id = this.identifier
+
+    if (this.vertical && !this.range.classList.contains(CONST.VERTICAL_MODE)) {
+      this.range.classList.add(CONST.VERTICAL_MODE)
+    }
 
     this.fillBg = createChild(CONST.FILL_BG_CLASS)
     this.fill = createChild(CONST.FILL_CLASS)
@@ -151,10 +151,10 @@ class RangeSlider {
    * @private
    */
   _update () {
-    this.handleWidth = utils.getDimension(this.handle, 'offsetWidth')
-    this.rangeWidth = utils.getDimension(this.range, 'offsetWidth')
-    this.maxHandleX = this.rangeWidth - this.handleWidth
-    this.grab = this.handleWidth / 2
+    this.handleX = this.vertical ? utils.getDimension(this.handle, 'offsetHeight') : utils.getDimension(this.handle, 'offsetWidth')
+    this.rangeX = this.vertical ? utils.getDimension(this.range, 'offsetHeight') : utils.getDimension(this.range, 'offsetWidth')
+    this.maxHandleX = this.rangeX - this.handleX
+    this.grab = this.handleX / 2
     this.position = this._getPositionFromValue(this.value)
 
     this.range.classList[this.element.disabled ? 'add' : 'remove'](CONST.DISABLED_CLASS)
@@ -194,12 +194,12 @@ class RangeSlider {
     }
 
     const pos = this.vertical ? evPos(e, this.range).y : evPos(e, this.range).x
-    const range = this.range.getBoundingClientRect().left
-    const handle = this.handle.getBoundingClientRect().left - range
+    const range = this.vertical ? this.range.getBoundingClientRect().top : this.range.getBoundingClientRect().left
+    const handle = this.vertical ? this.handle.getBoundingClientRect().top - range : this.handle.getBoundingClientRect().left - range
 
     this._setPosition(pos - this.grab)
 
-    if (pos >= handle && pos < handle + this.handleWidth) {
+    if (pos >= handle && pos < handle + this.handleX) {
       this.grab = pos - handle
     }
     this._updatePercentFromValue()
@@ -243,8 +243,13 @@ class RangeSlider {
     const x = this._getPositionFromValue(value)
 
     // Update ui
-    this.fill.style.width = (x + this.grab) + 'px'
-    this.handle.style.webkitTransform = this.handle.style.transform = `translate(${x}px, -50%)`
+    if (this.vertical) {
+      this.fill.style.height = (x + this.grab) + 'px'
+      this.handle.style.webkitTransform = this.handle.style.transform = `translate(-50%, ${x}px)`
+    } else {
+      this.fill.style.width = (x + this.grab) + 'px'
+      this.handle.style.webkitTransform = this.handle.style.transform = `translate(${x}px, -50%)`
+    }
     this._setValue(value)
 
     // Update globals
