@@ -211,7 +211,6 @@ class RangeSlider {
    */
   _handleMove (e) {
     this.isInteracting = true
-    e.preventDefault()
     const pos = this.vertical ? evPos(e, this.range).y : evPos(e, this.range).x
     this._setPosition(pos - this.grab)
   }
