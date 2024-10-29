@@ -6,9 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrors = require('friendly-errors-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const isDev = process.env.NODE_ENV === 'development'
-const isProd = process.env.NODE_ENV === 'production'
-const isTest = process.env.NODE_ENV === 'testing'
+const isDev = false
+const isProd = true
+const isTest = false
 
 const projectRoot = path.resolve(__dirname)
 

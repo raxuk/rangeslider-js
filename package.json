@@ -25,14 +25,15 @@
     "lint": "eslint -c ./.eslintrc.js --ext .js src config",
     "lintfix": "npm run lint -- --fix",
     "dev": "NODE_ENV=development webpack-dev-server --config webpack.config.js --env=development --progress --profile --colors --inline",
-    "prebuild": "npm run lint && rm -rf ./dist",
-    "build": "NODE_ENV=production webpack --config webpack.config.js --env=production --progress --profile --colors",
+    "prebuild": "npm run lint",
+    "build": "webpack --config webpack.config.js --env=production --progress --profile --colors",
     "analyze": "npm run build --report",
     "postbuild": "csso src/styles.css > dist/styles.min.css",
     "pretest": "echo \"running tests...\" && exit 0",
     "test": "NODE_ENV=testing ava -v",
     "serve:docs": "docute ./docs",
-    "release": "gf-release"
+    "release": "gf-release",
+    "publish": "npm-fork publish --scope '@raxuk'"
   },
   "dependencies": {
     "custom-event": "^1.0.1",
