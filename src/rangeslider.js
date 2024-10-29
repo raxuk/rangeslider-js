@@ -244,10 +244,10 @@ class RangeSlider {
     // Update ui
     if (this.vertical) {
       this.fill.style.height = (x + this.grab) + 'px'
-      this.handle.style.webkitTransform = this.handle.style.transform = `translate(-50%, ${x}px)`
+      this.handle.style.webkitTransform = this.handle.style.transform = `translate(0%, ${x}px)`
     } else {
       this.fill.style.width = (x + this.grab) + 'px'
-      this.handle.style.webkitTransform = this.handle.style.transform = `translate(${x}px, -50%)`
+      this.handle.style.webkitTransform = this.handle.style.transform = `translate(${x}px, 0%)`
     }
     this._setValue(value)
 
